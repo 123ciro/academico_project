@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <style>
+        .texbox{
+            width: 100px;
+        }
+        
+        </style>
+    
+    <ui:composition>
+
+        <p:dialog id="PersonasCreateDlg" widgetVar="PersonasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreatePersonasTitle}" closeOnEscape="true">
+
+            <h:form id="PersonasCreateForm">
+
+                <h:panelGroup id="display" rendered="#{personasController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_nombre}" for="nombre"  />
+                        <p:inputText id="nombre" value="#{personasController.selected.nombre}" style="width: 50px" title="#{myBundle.CreatePersonasTitle_nombre}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{personasController.selected.apellido}" title="#{myBundle.CreatePersonasTitle_apellido}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_apellido}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{personasController.selected.cedula}" title="#{myBundle.CreatePersonasTitle_cedula}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_cedula}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{personasController.selected.telefono}" title="#{myBundle.CreatePersonasTitle_telefono}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_telefono}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{personasController.selected.email}" title="#{myBundle.CreatePersonasTitle_email}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_email}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_fechanacimiento}" for="fechanacimiento" />
+                        <p:calendar id="fechanacimiento" pattern="MM/dd/yyyy" value="#{personasController.selected.fechanacimiento}" title="#{myBundle.CreatePersonasTitle_fechanacimiento}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_fechanacimiento}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_estadocivil}" for="estadocivil" />
+                        <p:selectOneMenu id="estadocivil"   value="#{personasController.selected.estadocivil}"  required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_estadocivil}" maxlength="255" >
+                            <f:selectItem itemLabel="Eliga una Opcion" itemValue=""></f:selectItem>
+                            <f:selectItem itemLabel="Soltero/a" itemValue="Soltero/a"></f:selectItem>
+                            <f:selectItem itemLabel="Casado/a" itemValue="Casado/a"></f:selectItem>
+                            <f:selectItem itemLabel="Viudo/a" itemValue="Viudo/a"></f:selectItem>
+                            <f:selectItem itemLabel="Separado/a" itemValue="Separado/a"></f:selectItem>
+                            <f:selectItem itemLabel="Comprometido/a" itemValue="Comprometido/a"></f:selectItem>
+                        </p:selectOneMenu>
+
+
+
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_nacionalidad}" for="nacionalidad" />
+                        <p:inputText id="nacionalidad" value="#{personasController.selected.nacionalidad}" title="#{myBundle.CreatePersonasTitle_nacionalidad}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_nacionalidad}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{personasController.selected.direccion}" title="#{myBundle.CreatePersonasTitle_direccion}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_direccion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreatePersonasLabel_sexo}" for="sexo" />
+                        
+                        <p:selectOneMenu id="sexo" value="#{personasController.selected.sexo}"  required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_sexo}"  maxlength="255" >
+                            <f:selectItem itemLabel="Eliga una Opcion" itemValue="Sin Eleccion"></f:selectItem>
+                            <f:selectItem itemLabel="Masculino" itemValue="Soltero/a"></f:selectItem>
+                            <f:selectItem itemLabel="Femenino" itemValue="Casado/a"></f:selectItem>
+                           
+                        </p:selectOneMenu>
+                        
+                        
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{personasController.saveNew}" value="#{myBundle.Save}" update="display,:PersonasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PersonasCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PersonasCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

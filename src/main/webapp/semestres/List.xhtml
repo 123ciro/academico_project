@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="SemestresListForm">
+
+        <p:panel header="#{myBundle.ListSemestresTitle}">
+            <p:contextMenu id="SemestresDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('SemestresListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('SemestresListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('SemestresListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('SemestresListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.SemestresMenuItem_idcarrera}" icon="ui-icon-search"  actionListener="#{semestresController.prepareIdcarrera}" update=":CarrerasViewForm" oncomplete="PF('CarrerasViewDialog').show()" disabled="#{empty semestresController.selected.idcarrera}"/>  
+                <p:menuitem value="#{myBundle.SemestresMenuItem_semestresDetalleCollection}" icon="ui-icon-search"  action="#{semestresController.navigateSemestresDetalleCollection}" disabled="#{semestresController.isSemestresDetalleCollectionEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{semestresController.items}"
+                         lazy="false"
+                         rowKey="#{item.idsemestre}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{semestresController.selected}"
+                         filteredValue="#{semestresController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{semestresController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idsemestre}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SemestresDataTableContextMenu" listener="#{semestresController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:SemestresDataTableContextMenu" listener="#{semestresController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{semestresController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('SemestresListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idsemestre}" filterBy="#{item.idsemestre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSemestresTitle_idsemestre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idsemestre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.codsemestre}" filterBy="#{item.codsemestre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSemestresTitle_codsemestre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.codsemestre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSemestresTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idcarrera.descripcion}" filterBy="#{item.idcarrera.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListSemestresTitle_idcarrera}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcarrera.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{semestresController.prepareCreate}" update=":SemestresCreateForm" oncomplete="PF('SemestresCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":SemestresViewForm" oncomplete="PF('SemestresViewDialog').show()" disabled="#{empty semestresController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":SemestresEditForm" oncomplete="PF('SemestresEditDialog').show()" disabled="#{empty semestresController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{semestresController.delete}" update=":growl,datalist" disabled="#{empty semestresController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

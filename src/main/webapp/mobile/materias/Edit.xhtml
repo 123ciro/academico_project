@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="MateriasEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditMateriasTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:MateriasListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="MateriasEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{materiasController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditMateriasLabel_idmateria}" for="idmateria" />
+                            <h:outputText id="idmateria" value="#{materiasController.selected.idmateria}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditMateriasLabel_codigo}" for="codigo" />
+                            <p:inputText id="codigo" value="#{materiasController.selected.codigo}" title="#{myBundle.EditMateriasTitle_codigo}" required="true" requiredMessage="#{myBundle.EditMateriasRequiredMessage_codigo}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditMateriasLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{materiasController.selected.nombre}" title="#{myBundle.EditMateriasTitle_nombre}" required="true" requiredMessage="#{myBundle.EditMateriasRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditMateriasLabel_descripcion}" for="descripcion" />
+                            <p:inputText id="descripcion" value="#{materiasController.selected.descripcion}" title="#{myBundle.EditMateriasTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditMateriasRequiredMessage_descripcion}" size="255" maxlength="255"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{materiasController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:MateriasListPage:MateriasListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:MateriasListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

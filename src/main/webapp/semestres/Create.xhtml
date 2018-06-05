@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SemestresCreateDlg" widgetVar="SemestresCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateSemestresTitle}" closeOnEscape="true">
+
+            <h:form id="SemestresCreateForm">
+
+                <h:panelGroup id="display" rendered="#{semestresController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateSemestresLabel_codsemestre}" for="codsemestre" />
+                        <p:inputText id="codsemestre" value="#{semestresController.selected.codsemestre}" title="#{myBundle.CreateSemestresTitle_codsemestre}" required="true" requiredMessage="#{myBundle.CreateSemestresRequiredMessage_codsemestre}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateSemestresLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{semestresController.selected.nombre}" title="#{myBundle.CreateSemestresTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateSemestresRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateSemestresLabel_idcarrera}" for="idcarrera" />
+                        <p:selectOneMenu id="idcarrera" value="#{semestresController.selected.idcarrera}" required="true" requiredMessage="#{myBundle.CreateSemestresRequiredMessage_idcarrera}" converter="carrerasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{carrerasController.items}"
+                                           var="idcarreraItem"
+                                           itemValue="#{idcarreraItem}"
+                                           itemLabel="#{idcarreraItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{semestresController.saveNew}" value="#{myBundle.Save}" update="display,:SemestresListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('SemestresCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('SemestresCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

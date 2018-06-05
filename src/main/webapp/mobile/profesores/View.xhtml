@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ProfesoresViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewProfesoresTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ProfesoresListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ProfesoresViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{profesoresController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProfesoresLabel_idprofesor}"/>
+                            <h:outputText value="#{profesoresController.selected.idprofesor}" title="#{myBundle.ViewProfesoresTitle_idprofesor}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProfesoresLabel_especialidad}"/>
+                            <h:outputText value="#{profesoresController.selected.especialidad}" title="#{myBundle.ViewProfesoresTitle_especialidad}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewProfesoresLabel_idpersona}"/>
+                            <h:outputText value="#{profesoresController.selected.idpersona.idpersona}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MateriasViewDlg" widgetVar="MateriasViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewMateriasTitle}" closeOnEscape="true">
+
+            <h:form id="MateriasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{materiasController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewMateriasLabel_idmateria}"/>
+                        <h:outputText value="#{materiasController.selected.idmateria}" title="#{myBundle.ViewMateriasTitle_idmateria}"/>
+
+                        <h:outputText value="#{myBundle.ViewMateriasLabel_codigo}"/>
+                        <h:outputText value="#{materiasController.selected.codigo}" title="#{myBundle.ViewMateriasTitle_codigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewMateriasLabel_nombre}"/>
+                        <h:outputText value="#{materiasController.selected.nombre}" title="#{myBundle.ViewMateriasTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewMateriasLabel_descripcion}"/>
+                        <h:outputText value="#{materiasController.selected.descripcion}" title="#{myBundle.ViewMateriasTitle_descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('MateriasViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfesoresViewDlg" widgetVar="ProfesoresViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewProfesoresTitle}" closeOnEscape="true">
+
+            <h:form id="ProfesoresViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{profesoresController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewProfesoresLabel_idprofesor}"/>
+                        <h:outputText value="#{profesoresController.selected.idprofesor}" title="#{myBundle.ViewProfesoresTitle_idprofesor}"/>
+
+                        <h:outputText value="#{myBundle.ViewProfesoresLabel_especialidad}"/>
+                        <h:outputText value="#{profesoresController.selected.especialidad}" title="#{myBundle.ViewProfesoresTitle_especialidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewProfesoresLabel_idpersona}"/>
+                        <h:outputText value="#{profesoresController.selected.idpersona.idpersona}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ProfesoresViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

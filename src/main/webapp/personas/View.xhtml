@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="PersonasViewDlg" widgetVar="PersonasViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewPersonasTitle}" closeOnEscape="true">
+
+            <h:form id="PersonasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{personasController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_idpersona}"/>
+                        <h:outputText value="#{personasController.selected.idpersona}" title="#{myBundle.ViewPersonasTitle_idpersona}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_nombre}"/>
+                        <h:outputText value="#{personasController.selected.nombre}" title="#{myBundle.ViewPersonasTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_apellido}"/>
+                        <h:outputText value="#{personasController.selected.apellido}" title="#{myBundle.ViewPersonasTitle_apellido}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_cedula}"/>
+                        <h:outputText value="#{personasController.selected.cedula}" title="#{myBundle.ViewPersonasTitle_cedula}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_telefono}"/>
+                        <h:outputText value="#{personasController.selected.telefono}" title="#{myBundle.ViewPersonasTitle_telefono}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_email}"/>
+                        <h:outputText value="#{personasController.selected.email}" title="#{myBundle.ViewPersonasTitle_email}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_fechanacimiento}"/>
+                        <h:outputText value="#{personasController.selected.fechanacimiento}" title="#{myBundle.ViewPersonasTitle_fechanacimiento}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_estadocivil}"/>
+                        <h:outputText value="#{personasController.selected.estadocivil}" title="#{myBundle.ViewPersonasTitle_estadocivil}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_nacionalidad}"/>
+                        <h:outputText value="#{personasController.selected.nacionalidad}" title="#{myBundle.ViewPersonasTitle_nacionalidad}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_direccion}"/>
+                        <h:outputText value="#{personasController.selected.direccion}" title="#{myBundle.ViewPersonasTitle_direccion}"/>
+
+                        <h:outputText value="#{myBundle.ViewPersonasLabel_sexo}"/>
+                        <h:outputText value="#{personasController.selected.sexo}" title="#{myBundle.ViewPersonasTitle_sexo}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('PersonasViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PersonasListPage">
+        <pm:header title="#{myBundle.ListPersonasTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":PersonasCreatePage:PersonasCreateForm" actionListener="#{personasController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:PersonasCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PersonasListForm">
+
+                <p:dataList id="datalist"
+                            paginator="true"
+                            rows="10"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            pt:data-inset="true"
+                            value="#{personasController.items}"
+                            var="item">
+
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListPersonasTitle}"/>
+                    </f:facet>
+
+                    <p:commandLink update=":PersonasEditPage:PersonasEditForm" action="pm:PersonasEditPage">
+                        <p>
+
+
+
+                            <h:outputText value="#{item.idpersona}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.nombre}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.apellido}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.cedula}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.telefono}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.email}"/>
+
+
+                            <ui:remove>
+                                ,&nbsp;
+                                <h:outputText value="#{item.fechanacimiento}">
+                                    <f:convertDateTime pattern="MM/dd/yyyy" />
+                                </h:outputText>
+                            </ui:remove>
+
+                            <ui:remove>
+                                ,&nbsp;
+                                <h:outputText value="#{item.estadocivil}"/>
+                            </ui:remove>
+
+                            <ui:remove>
+                                ,&nbsp;
+                                <h:outputText value="#{item.nacionalidad}"/>
+                            </ui:remove>
+
+                            <ui:remove>
+                                ,&nbsp;
+                                <h:outputText value="#{item.direccion}"/>
+                            </ui:remove>
+
+                            <ui:remove>
+                                ,&nbsp;
+                                <h:outputText value="#{item.sexo}"/>
+                            </ui:remove>
+
+
+                        </p>
+                        <f:setPropertyActionListener value="#{item}" target="#{personasController.selected}" />
+                    </p:commandLink>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{myBundle.ListPersonasTitle}"/>
+                    </f:facet>
+
+                </p:dataList>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

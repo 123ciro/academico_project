@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="EvaluacionesEditDlg" widgetVar="EvaluacionesEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditEvaluacionesTitle}" closeOnEscape="true">
+
+            <h:form id="EvaluacionesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{evaluacionesController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditEvaluacionesLabel_idevaluacion}" for="idevaluacion" />
+                        <h:outputText id="idevaluacion" value="#{evaluacionesController.selected.idevaluacion}" />
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionesLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{evaluacionesController.selected.descripcion}" title="#{myBundle.EditEvaluacionesTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditEvaluacionesRequiredMessage_descripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionesLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{evaluacionesController.selected.fecha}" title="#{myBundle.EditEvaluacionesTitle_fecha}" required="true" requiredMessage="#{myBundle.EditEvaluacionesRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionesLabel_calificaciones}" for="calificaciones" />
+                        <p:selectOneMenu id="calificaciones" value="#{evaluacionesController.selected.calificaciones}"  converter="calificacionesConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{calificacionesController.items}"
+                                           var="calificacionesItem"
+                                           itemValue="#{calificacionesItem}"
+                                           itemLabel="#{calificacionesItem.idcalificacion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.EditEvaluacionesLabel_idsemestredetalle}" for="idsemestredetalle" />
+                        <p:selectOneMenu id="idsemestredetalle" value="#{evaluacionesController.selected.idsemestredetalle}" required="true" requiredMessage="#{myBundle.EditEvaluacionesRequiredMessage_idsemestredetalle}" converter="semestresDetalleConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{semestresDetalleController.items}"
+                                           var="idsemestredetalleItem"
+                                           itemValue="#{idsemestredetalleItem}"
+                                           itemLabel="#{idsemestredetalleItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{evaluacionesController.save}" value="#{myBundle.Save}" update="display,:EvaluacionesListForm:datalist,:EvaluacionesListForm:EvaluacionesDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EvaluacionesEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EvaluacionesEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

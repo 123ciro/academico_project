@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="EvaluacionesCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateEvaluacionesTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:EvaluacionesListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="EvaluacionesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{evaluacionesController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_descripcion}" for="descripcion" />
+                            <p:inputText id="descripcion" value="#{evaluacionesController.selected.descripcion}" title="#{myBundle.CreateEvaluacionesTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateEvaluacionesRequiredMessage_descripcion}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_fecha}" for="fecha" />
+                            <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{evaluacionesController.selected.fecha}" title="#{myBundle.CreateEvaluacionesTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateEvaluacionesRequiredMessage_fecha}" showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_calificaciones}" for="calificaciones" />
+                            <p:selectOneMenu id="calificaciones" value="#{evaluacionesController.selected.calificaciones}"  converter="calificacionesConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{calificacionesController.items}"
+                                               var="calificacionesItem"
+                                               itemValue="#{calificacionesItem}"
+                                               itemLabel="#{calificacionesItem.idcalificacion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_idsemestredetalle}" for="idsemestredetalle" />
+                            <p:selectOneMenu id="idsemestredetalle" value="#{evaluacionesController.selected.idsemestredetalle}" required="true" requiredMessage="#{myBundle.CreateEvaluacionesRequiredMessage_idsemestredetalle}" converter="semestresDetalleConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{semestresDetalleController.items}"
+                                               var="idsemestredetalleItem"
+                                               itemValue="#{idsemestredetalleItem}"
+                                               itemLabel="#{idsemestredetalleItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{evaluacionesController.saveNew}" value="#{myBundle.Save}" update="display,:EvaluacionesListPage:EvaluacionesListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:EvaluacionesListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

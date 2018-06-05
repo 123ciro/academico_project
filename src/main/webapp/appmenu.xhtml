@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <h:form id="menuForm">
+            <p:menubar>
+                <p:menuitem value="#{myBundle.Home}" outcome="/index" icon="ui-icon-home"/>
+                <p:submenu label="#{myBundle.Maintenance}">
+                    <p:menuitem value="#{myBundle.AlumnosHeading}..." outcome="/app/alumnos/index" />
+                    <p:menuitem value="#{myBundle.CalificacionesHeading}..." outcome="/app/calificaciones/index" />
+                    <p:menuitem value="#{myBundle.CarrerasHeading}..." outcome="/app/carreras/index" />
+                    <p:menuitem value="#{myBundle.EvaluacionesHeading}..." outcome="/app/evaluaciones/index" />
+                    <p:menuitem value="#{myBundle.MateriasHeading}..." outcome="/app/materias/index" />
+                    <p:menuitem value="#{myBundle.PersonasHeading}..." outcome="/app/personas/index" />
+                    <p:menuitem value="#{myBundle.ProfesoresHeading}..." outcome="/app/profesores/index" />
+                    <p:menuitem value="#{myBundle.SemestresHeading}..." outcome="/app/semestres/index" />
+                    <p:menuitem value="#{myBundle.SemestresDetalleHeading}..." outcome="/app/semestresDetalle/index" />
+                </p:submenu>
+                <p:menuitem value="#{myBundle.Mobile}" outcome="/mobile/index" icon="ui-icon-signal"/>
+            </p:menubar>
+        </h:form>
+    </ui:composition>
+
+</html>

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="SemestresViewDlg" widgetVar="SemestresViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewSemestresTitle}" closeOnEscape="true">
+
+            <h:form id="SemestresViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{semestresController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewSemestresLabel_idsemestre}"/>
+                        <h:outputText value="#{semestresController.selected.idsemestre}" title="#{myBundle.ViewSemestresTitle_idsemestre}"/>
+
+                        <h:outputText value="#{myBundle.ViewSemestresLabel_codsemestre}"/>
+                        <h:outputText value="#{semestresController.selected.codsemestre}" title="#{myBundle.ViewSemestresTitle_codsemestre}"/>
+
+                        <h:outputText value="#{myBundle.ViewSemestresLabel_nombre}"/>
+                        <h:outputText value="#{semestresController.selected.nombre}" title="#{myBundle.ViewSemestresTitle_nombre}"/>
+
+                        <h:outputText value="#{myBundle.ViewSemestresLabel_idcarrera}"/>
+                        <h:outputText value="#{semestresController.selected.idcarrera.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('SemestresViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

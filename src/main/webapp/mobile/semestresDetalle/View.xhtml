@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SemestresDetalleViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewSemestresDetalleTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:SemestresDetalleListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SemestresDetalleViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{semestresDetalleController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSemestresDetalleLabel_idsemestredetalle}"/>
+                            <h:outputText value="#{semestresDetalleController.selected.idsemestredetalle}" title="#{myBundle.ViewSemestresDetalleTitle_idsemestredetalle}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSemestresDetalleLabel_descripcion}"/>
+                            <h:outputText value="#{semestresDetalleController.selected.descripcion}" title="#{myBundle.ViewSemestresDetalleTitle_descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSemestresDetalleLabel_idmateria}"/>
+                            <h:outputText value="#{semestresDetalleController.selected.idmateria.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSemestresDetalleLabel_idprofesor}"/>
+                            <h:outputText value="#{semestresDetalleController.selected.idprofesor.idprofesor}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewSemestresDetalleLabel_idsemestre}"/>
+                            <h:outputText value="#{semestresDetalleController.selected.idsemestre.idsemestre}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

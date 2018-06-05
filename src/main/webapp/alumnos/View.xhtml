@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AlumnosViewDlg" widgetVar="AlumnosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewAlumnosTitle}" closeOnEscape="true">
+
+            <h:form id="AlumnosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{alumnosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewAlumnosLabel_idalumno}"/>
+                        <h:outputText value="#{alumnosController.selected.idalumno}" title="#{myBundle.ViewAlumnosTitle_idalumno}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnosLabel_codigo}"/>
+                        <h:outputText value="#{alumnosController.selected.codigo}" title="#{myBundle.ViewAlumnosTitle_codigo}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnosLabel_fechainscripcion}"/>
+                        <h:outputText value="#{alumnosController.selected.fechainscripcion}" title="#{myBundle.ViewAlumnosTitle_fechainscripcion}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewAlumnosLabel_idcarrera}"/>
+                        <h:outputText value="#{alumnosController.selected.idcarrera.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewAlumnosLabel_idpersona}"/>
+                        <h:outputText value="#{alumnosController.selected.idpersona.idpersona}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('AlumnosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

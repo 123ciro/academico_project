@@ -1,0 +1,62 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package maven.company.facade;
+
+import javax.ejb.Stateless;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import maven.company.academico_db.Evaluaciones;
+import maven.company.academico_db.Evaluaciones_;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
+import maven.company.academico_db.Calificaciones;
+import maven.company.academico_db.SemestresDetalle;
+
+/**
+ *
+ * @author oym-dev06
+ */
+@Stateless
+public class EvaluacionesFacade extends AbstractFacade<Evaluaciones> {
+
+    @PersistenceContext(unitName = "maven.company_academico_project_war_1PU")
+    private EntityManager em;
+
+    @Override
+    protected EntityManager getEntityManager() {
+        return em;
+    }
+
+    public EvaluacionesFacade() {
+        super(Evaluaciones.class);
+    }
+
+    public boolean isCalificacionesEmpty(Evaluaciones entity) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Evaluaciones> evaluaciones = cq.from(Evaluaciones.class);
+        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(evaluaciones, entity), cb.isNotNull(evaluaciones.get(Evaluaciones_.calificaciones)));
+        return em.createQuery(cq).getResultList().isEmpty();
+    }
+
+    public Calificaciones findCalificaciones(Evaluaciones entity) {
+        return this.getMergedEntity(entity).getCalificaciones();
+    }
+
+    public boolean isIdsemestredetalleEmpty(Evaluaciones entity) {
+        CriteriaBuilder cb = em.getCriteriaBuilder();
+        CriteriaQuery<Long> cq = cb.createQuery(Long.class);
+        Root<Evaluaciones> evaluaciones = cq.from(Evaluaciones.class);
+        cq.select(cb.literal(1L)).distinct(true).where(cb.equal(evaluaciones, entity), cb.isNotNull(evaluaciones.get(Evaluaciones_.idsemestredetalle)));
+        return em.createQuery(cq).getResultList().isEmpty();
+    }
+
+    public SemestresDetalle findIdsemestredetalle(Evaluaciones entity) {
+        return this.getMergedEntity(entity).getIdsemestredetalle();
+    }
+    
+}

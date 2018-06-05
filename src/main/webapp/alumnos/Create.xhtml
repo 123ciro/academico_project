@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="AlumnosCreateDlg" widgetVar="AlumnosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateAlumnosTitle}" closeOnEscape="true">
+
+            <h:form id="AlumnosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{alumnosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateAlumnosLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{alumnosController.selected.codigo}" title="#{myBundle.CreateAlumnosTitle_codigo}" required="true" requiredMessage="#{myBundle.CreateAlumnosRequiredMessage_codigo}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAlumnosLabel_fechainscripcion}" for="fechainscripcion" />
+                        <p:calendar id="fechainscripcion" pattern="MM/dd/yyyy" value="#{alumnosController.selected.fechainscripcion}" title="#{myBundle.CreateAlumnosTitle_fechainscripcion}" required="true" requiredMessage="#{myBundle.CreateAlumnosRequiredMessage_fechainscripcion}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateAlumnosLabel_idcarrera}" for="idcarrera" />
+                        <p:selectOneMenu id="idcarrera" value="#{alumnosController.selected.idcarrera}" required="true" requiredMessage="#{myBundle.CreateAlumnosRequiredMessage_idcarrera}" converter="carrerasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{carrerasController.items}"
+                                           var="idcarreraItem"
+                                           itemValue="#{idcarreraItem}"
+                                           itemLabel="#{idcarreraItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateAlumnosLabel_idpersona}" for="idpersona" />
+                        <p:selectOneMenu id="idpersona" value="#{alumnosController.selected.idpersona}" required="true" requiredMessage="#{myBundle.CreateAlumnosRequiredMessage_idpersona}" converter="personasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{personasController.items}"
+                                           var="idpersonaItem"
+                                           itemValue="#{idpersonaItem}"
+                                           itemLabel="#{idpersonaItem.idpersona.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{alumnosController.saveNew}" value="#{myBundle.Save}" update="display,:AlumnosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('AlumnosCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('AlumnosCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

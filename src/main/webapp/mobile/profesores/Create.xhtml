@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ProfesoresCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateProfesoresTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ProfesoresListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ProfesoresCreateForm">
+
+                <h:panelGroup id="display" rendered="#{profesoresController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProfesoresLabel_especialidad}" for="especialidad" />
+                            <p:inputText id="especialidad" value="#{profesoresController.selected.especialidad}" title="#{myBundle.CreateProfesoresTitle_especialidad}" required="true" requiredMessage="#{myBundle.CreateProfesoresRequiredMessage_especialidad}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateProfesoresLabel_idpersona}" for="idpersona" />
+                            <p:selectOneMenu id="idpersona" value="#{profesoresController.selected.idpersona}" required="true" requiredMessage="#{myBundle.CreateProfesoresRequiredMessage_idpersona}" converter="personasConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{personasController.items}"
+                                               var="idpersonaItem"
+                                               itemValue="#{idpersonaItem}"
+                                               itemLabel="#{idpersonaItem.idpersona.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{profesoresController.saveNew}" value="#{myBundle.Save}" update="display,:ProfesoresListPage:ProfesoresListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:ProfesoresListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

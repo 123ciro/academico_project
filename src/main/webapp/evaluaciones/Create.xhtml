@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvaluacionesCreateDlg" widgetVar="EvaluacionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateEvaluacionesTitle}" closeOnEscape="true">
+
+            <h:form id="EvaluacionesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{evaluacionesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{evaluacionesController.selected.descripcion}" title="#{myBundle.CreateEvaluacionesTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateEvaluacionesRequiredMessage_descripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_fecha}" for="fecha" />
+                        <p:calendar id="fecha" pattern="MM/dd/yyyy" value="#{evaluacionesController.selected.fecha}" title="#{myBundle.CreateEvaluacionesTitle_fecha}" required="true" requiredMessage="#{myBundle.CreateEvaluacionesRequiredMessage_fecha}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_calificaciones}" for="calificaciones" />
+                        <p:selectOneMenu id="calificaciones" value="#{evaluacionesController.selected.calificaciones}"  converter="calificacionesConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{calificacionesController.items}"
+                                           var="calificacionesItem"
+                                           itemValue="#{calificacionesItem}"
+                                           itemLabel="#{calificacionesItem.idcalificacion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateEvaluacionesLabel_idsemestredetalle}" for="idsemestredetalle" />
+                        <p:selectOneMenu id="idsemestredetalle" value="#{evaluacionesController.selected.idsemestredetalle}" required="true" requiredMessage="#{myBundle.CreateEvaluacionesRequiredMessage_idsemestredetalle}" converter="semestresDetalleConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{semestresDetalleController.items}"
+                                           var="idsemestredetalleItem"
+                                           itemValue="#{idsemestredetalleItem}"
+                                           itemLabel="#{idsemestredetalleItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{evaluacionesController.saveNew}" value="#{myBundle.Save}" update="display,:EvaluacionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('EvaluacionesCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('EvaluacionesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

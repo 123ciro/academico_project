@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="SemestresEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditSemestresTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:SemestresListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="SemestresEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{semestresController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditSemestresLabel_idsemestre}" for="idsemestre" />
+                            <h:outputText id="idsemestre" value="#{semestresController.selected.idsemestre}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditSemestresLabel_codsemestre}" for="codsemestre" />
+                            <p:inputText id="codsemestre" value="#{semestresController.selected.codsemestre}" title="#{myBundle.EditSemestresTitle_codsemestre}" required="true" requiredMessage="#{myBundle.EditSemestresRequiredMessage_codsemestre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditSemestresLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{semestresController.selected.nombre}" title="#{myBundle.EditSemestresTitle_nombre}" required="true" requiredMessage="#{myBundle.EditSemestresRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditSemestresLabel_idcarrera}" for="idcarrera" />
+                            <p:selectOneMenu id="idcarrera" value="#{semestresController.selected.idcarrera}" required="true" requiredMessage="#{myBundle.EditSemestresRequiredMessage_idcarrera}" converter="carrerasConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{carrerasController.items}"
+                                               var="idcarreraItem"
+                                               itemValue="#{idcarreraItem}"
+                                               itemLabel="#{idcarreraItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{semestresController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:SemestresListPage:SemestresListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:SemestresListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

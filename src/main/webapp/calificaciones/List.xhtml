@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CalificacionesListForm">
+
+        <p:panel header="#{myBundle.ListCalificacionesTitle}">
+            <p:contextMenu id="CalificacionesDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CalificacionesListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CalificacionesListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CalificacionesListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CalificacionesListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CalificacionesMenuItem_idalumno}" icon="ui-icon-search"  actionListener="#{calificacionesController.prepareIdalumno}" update=":AlumnosViewForm" oncomplete="PF('AlumnosViewDialog').show()" disabled="#{empty calificacionesController.selected.idalumno}"/>  
+                <p:menuitem value="#{myBundle.CalificacionesMenuItem_idevalucion}" icon="ui-icon-search"  actionListener="#{calificacionesController.prepareIdevalucion}" update=":EvaluacionesViewForm" oncomplete="PF('EvaluacionesViewDialog').show()" disabled="#{empty calificacionesController.selected.idevalucion}"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{calificacionesController.items}"
+                         lazy="false"
+                         rowKey="#{item.idcalificacion}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{calificacionesController.selected}"
+                         filteredValue="#{calificacionesController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{calificacionesController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idcalificacion}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CalificacionesDataTableContextMenu" listener="#{calificacionesController.resetParents}"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CalificacionesDataTableContextMenu" listener="#{calificacionesController.resetParents}"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton" listener="#{calificacionesController.resetParents}"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CalificacionesListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idcalificacion}" filterBy="#{item.idcalificacion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionesTitle_idcalificacion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcalificacion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nota}" filterBy="#{item.nota}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionesTitle_nota}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nota}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idalumno.idalumno}" filterBy="#{item.idalumno.idalumno}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionesTitle_idalumno}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idalumno.idalumno}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.idevalucion.descripcion}" filterBy="#{item.idevalucion.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCalificacionesTitle_idevalucion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idevalucion.descripcion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{calificacionesController.prepareCreate}" update=":CalificacionesCreateForm" oncomplete="PF('CalificacionesCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CalificacionesViewForm" oncomplete="PF('CalificacionesViewDialog').show()" disabled="#{empty calificacionesController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CalificacionesEditForm" oncomplete="PF('CalificacionesEditDialog').show()" disabled="#{empty calificacionesController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{calificacionesController.delete}" update=":growl,datalist" disabled="#{empty calificacionesController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

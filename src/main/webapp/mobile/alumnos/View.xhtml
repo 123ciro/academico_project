@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AlumnosViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewAlumnosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:AlumnosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AlumnosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{alumnosController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAlumnosLabel_idalumno}"/>
+                            <h:outputText value="#{alumnosController.selected.idalumno}" title="#{myBundle.ViewAlumnosTitle_idalumno}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAlumnosLabel_codigo}"/>
+                            <h:outputText value="#{alumnosController.selected.codigo}" title="#{myBundle.ViewAlumnosTitle_codigo}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAlumnosLabel_fechainscripcion}"/>
+                            <h:outputText value="#{alumnosController.selected.fechainscripcion}" title="#{myBundle.ViewAlumnosTitle_fechainscripcion}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAlumnosLabel_idcarrera}"/>
+                            <h:outputText value="#{alumnosController.selected.idcarrera.descripcion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewAlumnosLabel_idpersona}"/>
+                            <h:outputText value="#{alumnosController.selected.idpersona.idpersona}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

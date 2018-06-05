@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="CarrerasListForm">
+
+        <p:panel header="#{myBundle.ListCarrerasTitle}">
+            <p:contextMenu id="CarrerasDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('CarrerasListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('CarrerasListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('CarrerasListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('CarrerasListForm:deleteButton').click();" icon="ui-icon-trash"/>
+                <p:separator/>
+                <p:menuitem value="#{myBundle.CarrerasMenuItem_alumnosCollection}" icon="ui-icon-search"  action="#{carrerasController.navigateAlumnosCollection}" disabled="#{carrerasController.isAlumnosCollectionEmpty}" ajax="false"/>  
+                <p:menuitem value="#{myBundle.CarrerasMenuItem_semestresCollection}" icon="ui-icon-search"  action="#{carrerasController.navigateSemestresCollection}" disabled="#{carrerasController.isSemestresCollectionEmpty}" ajax="false"/>  
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{carrerasController.items}"
+                         lazy="false"
+                         rowKey="#{item.idcarrera}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{carrerasController.selected}"
+                         filteredValue="#{carrerasController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{carrerasController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.idcarrera}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CarrerasDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:CarrerasDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('CarrerasListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.idcarrera}" filterBy="#{item.idcarrera}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCarrerasTitle_idcarrera}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.idcarrera}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.nombre}" filterBy="#{item.nombre}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCarrerasTitle_nombre}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.nombre}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.descripcion}" filterBy="#{item.descripcion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCarrerasTitle_descripcion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.descripcion}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.duracion}" filterBy="#{item.duracion}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListCarrerasTitle_duracion}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.duracion}"/>
+                </p:column>
+
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{carrerasController.prepareCreate}" update=":CarrerasCreateForm" oncomplete="PF('CarrerasCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":CarrerasViewForm" oncomplete="PF('CarrerasViewDialog').show()" disabled="#{empty carrerasController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":CarrerasEditForm" oncomplete="PF('CarrerasEditDialog').show()" disabled="#{empty carrerasController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{carrerasController.delete}" update=":growl,datalist" disabled="#{empty carrerasController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

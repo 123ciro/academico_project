@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PersonasViewPage" lazy="true">
+        <pm:header title="#{myBundle.ViewPersonasTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:PersonasListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PersonasViewForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{personasController.selected != null}">
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_idpersona}"/>
+                            <h:outputText value="#{personasController.selected.idpersona}" title="#{myBundle.ViewPersonasTitle_idpersona}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_nombre}"/>
+                            <h:outputText value="#{personasController.selected.nombre}" title="#{myBundle.ViewPersonasTitle_nombre}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_apellido}"/>
+                            <h:outputText value="#{personasController.selected.apellido}" title="#{myBundle.ViewPersonasTitle_apellido}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_cedula}"/>
+                            <h:outputText value="#{personasController.selected.cedula}" title="#{myBundle.ViewPersonasTitle_cedula}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_telefono}"/>
+                            <h:outputText value="#{personasController.selected.telefono}" title="#{myBundle.ViewPersonasTitle_telefono}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_email}"/>
+                            <h:outputText value="#{personasController.selected.email}" title="#{myBundle.ViewPersonasTitle_email}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_fechanacimiento}"/>
+                            <h:outputText value="#{personasController.selected.fechanacimiento}" title="#{myBundle.ViewPersonasTitle_fechanacimiento}">
+                                <f:convertDateTime pattern="MM/dd/yyyy" />
+                            </h:outputText>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_estadocivil}"/>
+                            <h:outputText value="#{personasController.selected.estadocivil}" title="#{myBundle.ViewPersonasTitle_estadocivil}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_nacionalidad}"/>
+                            <h:outputText value="#{personasController.selected.nacionalidad}" title="#{myBundle.ViewPersonasTitle_nacionalidad}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_direccion}"/>
+                            <h:outputText value="#{personasController.selected.direccion}" title="#{myBundle.ViewPersonasTitle_direccion}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <h:outputText value="#{myBundle.ViewPersonasLabel_sexo}"/>
+                            <h:outputText value="#{personasController.selected.sexo}" title="#{myBundle.ViewPersonasTitle_sexo}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="MateriasListPage">
+        <pm:header title="#{myBundle.ListMateriasTitle}">
+            <h:form>
+                <p:commandButton id="backButton"   styleClass="ui-btn-left  ui-btn-inline" icon="ui-icon-arrow-l" value="#{myBundle.Back}" action="#{mobilePageController.navigateBackInHistory('/mobile/index')}"/>
+                <p:commandButton id="createButton" styleClass="ui-btn-right ui-btn-inline" icon="ui-icon-plus"    value="#{myBundle.Create}" update=":MateriasCreatePage:MateriasCreateForm" actionListener="#{materiasController.prepareCreate}" action="#{mobilePageController.navigateWithHistory('pm:MateriasCreatePage')}">
+                    <f:actionListener binding="#{currentPageListener}"/>
+                </p:commandButton>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="MateriasListForm">
+
+                <p:dataList id="datalist"
+                            paginator="true"
+                            rows="10"
+                            rowsPerPageTemplate="10,20,30,40,50"
+                            pt:data-inset="true"
+                            value="#{materiasController.items}"
+                            var="item">
+
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListMateriasTitle}"/>
+                    </f:facet>
+
+                    <p:commandLink update=":MateriasEditPage:MateriasEditForm" action="pm:MateriasEditPage">
+                        <p>
+
+
+
+                            <h:outputText value="#{item.idmateria}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.codigo}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.nombre}"/>
+
+
+
+                            ,&nbsp;
+                            <h:outputText value="#{item.descripcion}"/>
+
+
+                        </p>
+                        <f:setPropertyActionListener value="#{item}" target="#{materiasController.selected}" />
+                    </p:commandLink>
+
+                    <f:facet name="footer">
+                        <h:outputText value="#{myBundle.ListMateriasTitle}"/>
+                    </f:facet>
+
+                </p:dataList>
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

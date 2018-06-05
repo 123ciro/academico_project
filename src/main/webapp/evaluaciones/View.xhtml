@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="EvaluacionesViewDlg" widgetVar="EvaluacionesViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewEvaluacionesTitle}" closeOnEscape="true">
+
+            <h:form id="EvaluacionesViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{evaluacionesController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewEvaluacionesLabel_idevaluacion}"/>
+                        <h:outputText value="#{evaluacionesController.selected.idevaluacion}" title="#{myBundle.ViewEvaluacionesTitle_idevaluacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEvaluacionesLabel_descripcion}"/>
+                        <h:outputText value="#{evaluacionesController.selected.descripcion}" title="#{myBundle.ViewEvaluacionesTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEvaluacionesLabel_fecha}"/>
+                        <h:outputText value="#{evaluacionesController.selected.fecha}" title="#{myBundle.ViewEvaluacionesTitle_fecha}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewEvaluacionesLabel_calificaciones}"/>
+                        <h:outputText value="#{evaluacionesController.selected.calificaciones.idcalificacion}"/>
+
+                        <h:outputText value="#{myBundle.ViewEvaluacionesLabel_idsemestredetalle}"/>
+                        <h:outputText value="#{evaluacionesController.selected.idsemestredetalle.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('EvaluacionesViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

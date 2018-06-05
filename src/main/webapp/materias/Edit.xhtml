@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="MateriasEditDlg" widgetVar="MateriasEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditMateriasTitle}" closeOnEscape="true">
+
+            <h:form id="MateriasEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{materiasController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditMateriasLabel_idmateria}" for="idmateria" />
+                        <h:outputText id="idmateria" value="#{materiasController.selected.idmateria}" />
+
+                        <p:outputLabel value="#{myBundle.EditMateriasLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{materiasController.selected.codigo}" title="#{myBundle.EditMateriasTitle_codigo}" required="true" requiredMessage="#{myBundle.EditMateriasRequiredMessage_codigo}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditMateriasLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{materiasController.selected.nombre}" title="#{myBundle.EditMateriasTitle_nombre}" required="true" requiredMessage="#{myBundle.EditMateriasRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditMateriasLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{materiasController.selected.descripcion}" title="#{myBundle.EditMateriasTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditMateriasRequiredMessage_descripcion}" size="255" maxlength="255"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{materiasController.save}" value="#{myBundle.Save}" update="display,:MateriasListForm:datalist,:MateriasListForm:MateriasDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MateriasEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('MateriasEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

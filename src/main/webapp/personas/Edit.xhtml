@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="PersonasEditDlg" widgetVar="PersonasEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditPersonasTitle}" closeOnEscape="true">
+
+            <h:form id="PersonasEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{personasController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditPersonasLabel_idpersona}" for="idpersona" />
+                        <h:outputText id="idpersona" value="#{personasController.selected.idpersona}" />
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{personasController.selected.nombre}" title="#{myBundle.EditPersonasTitle_nombre}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_apellido}" for="apellido" />
+                        <p:inputText id="apellido" value="#{personasController.selected.apellido}" title="#{myBundle.EditPersonasTitle_apellido}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_apellido}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_cedula}" for="cedula" />
+                        <p:inputText id="cedula" value="#{personasController.selected.cedula}" title="#{myBundle.EditPersonasTitle_cedula}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_cedula}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_telefono}" for="telefono" />
+                        <p:inputText id="telefono" value="#{personasController.selected.telefono}" title="#{myBundle.EditPersonasTitle_telefono}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_telefono}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_email}" for="email" />
+                        <p:inputText id="email" value="#{personasController.selected.email}" title="#{myBundle.EditPersonasTitle_email}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_email}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_fechanacimiento}" for="fechanacimiento" />
+                        <p:calendar id="fechanacimiento" pattern="MM/dd/yyyy" value="#{personasController.selected.fechanacimiento}" title="#{myBundle.EditPersonasTitle_fechanacimiento}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_fechanacimiento}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_estadocivil}" for="estadocivil" />
+                        <p:inputText id="estadocivil" value="#{personasController.selected.estadocivil}" title="#{myBundle.EditPersonasTitle_estadocivil}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_estadocivil}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_nacionalidad}" for="nacionalidad" />
+                        <p:inputText id="nacionalidad" value="#{personasController.selected.nacionalidad}" title="#{myBundle.EditPersonasTitle_nacionalidad}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_nacionalidad}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_direccion}" for="direccion" />
+                        <p:inputText id="direccion" value="#{personasController.selected.direccion}" title="#{myBundle.EditPersonasTitle_direccion}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_direccion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditPersonasLabel_sexo}" for="sexo" />
+                        <p:inputText id="sexo" value="#{personasController.selected.sexo}" title="#{myBundle.EditPersonasTitle_sexo}" required="true" requiredMessage="#{myBundle.EditPersonasRequiredMessage_sexo}" size="255" maxlength="255"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{personasController.save}" value="#{myBundle.Save}" update="display,:PersonasListForm:datalist,:PersonasListForm:PersonasDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('PersonasEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('PersonasEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

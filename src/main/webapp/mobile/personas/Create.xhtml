@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="PersonasCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreatePersonasTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:PersonasListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="PersonasCreateForm">
+
+                <h:panelGroup id="display" rendered="#{personasController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_nombre}" for="nombre" />
+                            <p:inputText id="nombre" value="#{personasController.selected.nombre}" title="#{myBundle.CreatePersonasTitle_nombre}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_nombre}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_apellido}" for="apellido" />
+                            <p:inputText id="apellido" value="#{personasController.selected.apellido}" title="#{myBundle.CreatePersonasTitle_apellido}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_apellido}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_cedula}" for="cedula" />
+                            <p:inputText id="cedula" value="#{personasController.selected.cedula}" title="#{myBundle.CreatePersonasTitle_cedula}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_cedula}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_telefono}" for="telefono" />
+                            <p:inputText id="telefono" value="#{personasController.selected.telefono}" title="#{myBundle.CreatePersonasTitle_telefono}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_telefono}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_email}" for="email" />
+                            <p:inputText id="email" value="#{personasController.selected.email}" title="#{myBundle.CreatePersonasTitle_email}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_email}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_fechanacimiento}" for="fechanacimiento" />
+                            <p:calendar id="fechanacimiento" pattern="MM/dd/yyyy" value="#{personasController.selected.fechanacimiento}" title="#{myBundle.CreatePersonasTitle_fechanacimiento}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_fechanacimiento}" showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_estadocivil}" for="estadocivil" />
+                            <p:inputText id="estadocivil" value="#{personasController.selected.estadocivil}" title="#{myBundle.CreatePersonasTitle_estadocivil}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_estadocivil}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_nacionalidad}" for="nacionalidad" />
+                            <p:inputText id="nacionalidad" value="#{personasController.selected.nacionalidad}" title="#{myBundle.CreatePersonasTitle_nacionalidad}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_nacionalidad}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_direccion}" for="direccion" />
+                            <p:inputText id="direccion" value="#{personasController.selected.direccion}" title="#{myBundle.CreatePersonasTitle_direccion}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_direccion}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreatePersonasLabel_sexo}" for="sexo" />
+                            <p:inputText id="sexo" value="#{personasController.selected.sexo}" title="#{myBundle.CreatePersonasTitle_sexo}" required="true" requiredMessage="#{myBundle.CreatePersonasRequiredMessage_sexo}" size="255" maxlength="255"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{personasController.saveNew}" value="#{myBundle.Save}" update="display,:PersonasListPage:PersonasListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:PersonasListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

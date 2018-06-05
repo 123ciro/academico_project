@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfesoresCreateDlg" widgetVar="ProfesoresCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateProfesoresTitle}" closeOnEscape="true">
+
+            <h:form id="ProfesoresCreateForm">
+
+                <h:panelGroup id="display" rendered="#{profesoresController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateProfesoresLabel_especialidad}" for="especialidad" />
+                        <p:inputText id="especialidad" value="#{profesoresController.selected.especialidad}" title="#{myBundle.CreateProfesoresTitle_especialidad}" required="true" requiredMessage="#{myBundle.CreateProfesoresRequiredMessage_especialidad}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateProfesoresLabel_idpersona}" for="idpersona" />
+                        <p:selectOneMenu id="idpersona" value="#{profesoresController.selected.idpersona}" required="true" requiredMessage="#{myBundle.CreateProfesoresRequiredMessage_idpersona}" converter="personasConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{personasController.items}"
+                                           var="idpersonaItem"
+                                           itemValue="#{idpersonaItem}"
+                                           itemLabel="#{idpersonaItem.idpersona.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{profesoresController.saveNew}" value="#{myBundle.Save}" update="display,:ProfesoresListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProfesoresCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ProfesoresCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

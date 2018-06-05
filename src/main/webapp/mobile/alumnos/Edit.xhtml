@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="AlumnosEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditAlumnosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:AlumnosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="AlumnosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{alumnosController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditAlumnosLabel_idalumno}" for="idalumno" />
+                            <h:outputText id="idalumno" value="#{alumnosController.selected.idalumno}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAlumnosLabel_codigo}" for="codigo" />
+                            <p:inputText id="codigo" value="#{alumnosController.selected.codigo}" title="#{myBundle.EditAlumnosTitle_codigo}" required="true" requiredMessage="#{myBundle.EditAlumnosRequiredMessage_codigo}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAlumnosLabel_fechainscripcion}" for="fechainscripcion" />
+                            <p:calendar id="fechainscripcion" pattern="MM/dd/yyyy" value="#{alumnosController.selected.fechainscripcion}" title="#{myBundle.EditAlumnosTitle_fechainscripcion}" required="true" requiredMessage="#{myBundle.EditAlumnosRequiredMessage_fechainscripcion}" showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAlumnosLabel_idcarrera}" for="idcarrera" />
+                            <p:selectOneMenu id="idcarrera" value="#{alumnosController.selected.idcarrera}" required="true" requiredMessage="#{myBundle.EditAlumnosRequiredMessage_idcarrera}" converter="carrerasConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{carrerasController.items}"
+                                               var="idcarreraItem"
+                                               itemValue="#{idcarreraItem}"
+                                               itemLabel="#{idcarreraItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditAlumnosLabel_idpersona}" for="idpersona" />
+                            <p:selectOneMenu id="idpersona" value="#{alumnosController.selected.idpersona}" required="true" requiredMessage="#{myBundle.EditAlumnosRequiredMessage_idpersona}" converter="personasConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{personasController.items}"
+                                               var="idpersonaItem"
+                                               itemValue="#{idpersonaItem}"
+                                               itemLabel="#{idpersonaItem.idpersona.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{alumnosController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:AlumnosListPage:AlumnosListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:AlumnosListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

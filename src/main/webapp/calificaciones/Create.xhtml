@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="CalificacionesCreateDlg" widgetVar="CalificacionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateCalificacionesTitle}" closeOnEscape="true">
+
+            <h:form id="CalificacionesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{calificacionesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionesLabel_nota}" for="nota" />
+                        <p:inputText id="nota" value="#{calificacionesController.selected.nota}" title="#{myBundle.CreateCalificacionesTitle_nota}" required="true" requiredMessage="#{myBundle.CreateCalificacionesRequiredMessage_nota}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionesLabel_idalumno}" for="idalumno" />
+                        <p:selectOneMenu id="idalumno" value="#{calificacionesController.selected.idalumno}" required="true" requiredMessage="#{myBundle.CreateCalificacionesRequiredMessage_idalumno}" converter="alumnosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{alumnosController.items}"
+                                           var="idalumnoItem"
+                                           itemValue="#{idalumnoItem}"
+                                           itemLabel="#{idalumnoItem.idalumno.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateCalificacionesLabel_idevalucion}" for="idevalucion" />
+                        <p:selectOneMenu id="idevalucion" value="#{calificacionesController.selected.idevalucion}" required="true" requiredMessage="#{myBundle.CreateCalificacionesRequiredMessage_idevalucion}" converter="evaluacionesConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{evaluacionesController.items}"
+                                           var="idevalucionItem"
+                                           itemValue="#{idevalucionItem}"
+                                           itemLabel="#{idevalucionItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{calificacionesController.saveNew}" value="#{myBundle.Save}" update="display,:CalificacionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('CalificacionesCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('CalificacionesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

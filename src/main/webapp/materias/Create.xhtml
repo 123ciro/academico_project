@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="MateriasCreateDlg" widgetVar="MateriasCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateMateriasTitle}" closeOnEscape="true">
+
+            <h:form id="MateriasCreateForm">
+
+                <h:panelGroup id="display" rendered="#{materiasController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateMateriasLabel_codigo}" for="codigo" />
+                        <p:inputText id="codigo" value="#{materiasController.selected.codigo}" title="#{myBundle.CreateMateriasTitle_codigo}" required="true" requiredMessage="#{myBundle.CreateMateriasRequiredMessage_codigo}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMateriasLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{materiasController.selected.nombre}" title="#{myBundle.CreateMateriasTitle_nombre}" required="true" requiredMessage="#{myBundle.CreateMateriasRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateMateriasLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{materiasController.selected.descripcion}" title="#{myBundle.CreateMateriasTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateMateriasRequiredMessage_descripcion}" size="255" maxlength="255"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{materiasController.saveNew}" value="#{myBundle.Save}" update="display,:MateriasListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('MateriasCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('MateriasCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

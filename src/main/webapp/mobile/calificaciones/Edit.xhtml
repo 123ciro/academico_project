@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="CalificacionesEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditCalificacionesTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:CalificacionesListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="CalificacionesEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{calificacionesController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditCalificacionesLabel_idcalificacion}" for="idcalificacion" />
+                            <h:outputText id="idcalificacion" value="#{calificacionesController.selected.idcalificacion}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalificacionesLabel_nota}" for="nota" />
+                            <p:inputText id="nota" value="#{calificacionesController.selected.nota}" title="#{myBundle.EditCalificacionesTitle_nota}" required="true" requiredMessage="#{myBundle.EditCalificacionesRequiredMessage_nota}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalificacionesLabel_idalumno}" for="idalumno" />
+                            <p:selectOneMenu id="idalumno" value="#{calificacionesController.selected.idalumno}" required="true" requiredMessage="#{myBundle.EditCalificacionesRequiredMessage_idalumno}" converter="alumnosConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{alumnosController.items}"
+                                               var="idalumnoItem"
+                                               itemValue="#{idalumnoItem}"
+                                               itemLabel="#{idalumnoItem.idalumno.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditCalificacionesLabel_idevalucion}" for="idevalucion" />
+                            <p:selectOneMenu id="idevalucion" value="#{calificacionesController.selected.idevalucion}" required="true" requiredMessage="#{myBundle.EditCalificacionesRequiredMessage_idevalucion}" converter="evaluacionesConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{evaluacionesController.items}"
+                                               var="idevalucionItem"
+                                               itemValue="#{idevalucionItem}"
+                                               itemLabel="#{idevalucionItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{calificacionesController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:CalificacionesListPage:CalificacionesListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:CalificacionesListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>
